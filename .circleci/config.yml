@@ -2,7 +2,7 @@ version: 2.1
 
 commands:
 
-  install-ansible:
+  install_ansible:
     description: Install ansible
     steps:
       - run:
