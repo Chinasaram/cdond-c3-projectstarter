@@ -20,7 +20,10 @@ commands:
         default: "${CIRCLE_WORKFLOW_ID:0:7}"
         type: string   
     steps:
-      - run: sudo apt install awscli
+      - run:
+          become: true
+          command: |
+            sudo apt install awscli
       - run:
           name: Destroy environments
           when: on_fail
