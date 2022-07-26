@@ -21,10 +21,6 @@ commands:
         type: string   
     steps:
       - run:
-          become: true
-          command: |
-            sudo apt install awscli
-      - run:
           name: Destroy environments
           when: on_fail
           command: |
@@ -244,7 +240,7 @@ jobs:
           command: |
             if grep -q "has been executed successfully" ~/project/backend/migrations_dump.txt
             then
-              curl --insecure https://kvdb.io/${KVDB_BUCKET}/migration_${CIRCLE_WORKFLOW_ID:0:7} -d '1'
+              curl --insecure https://kvdb.io/17MCSDY3PCvqFDpduvuZXs/migration_${CIRCLE_WORKFLOW_ID:0:7} -d '1'
             fi
       - destroy-environment
       - revert-migrations      
