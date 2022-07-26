@@ -230,8 +230,9 @@ jobs:
       - checkout
       - run:
           name: Install dependencies
+          become: yes
           command: |
-            apt install tar gzip aws-cli curl
+           sudo apt install tar gzip aws-cli curl
       - restore_cache: 
           keys: [backend-build]
       - run:
