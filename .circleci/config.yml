@@ -13,6 +13,16 @@ commands:
             sudo add-apt-repository --yes --update ppa:ansible/ansible
             sudo apt install ansible -y
 
+  install_aws-cli:
+    description: Install aws cli
+    steps:
+      - run:
+          name: install aws
+          command: |
+            curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+            unzip awscliv2.zip
+            sudo ./aws/install
+
   destroy-environment:
     description: Destroy back-end and front-end cloudformation stacks given a workflow ID.
     parameters:
@@ -225,14 +235,15 @@ jobs:
 
   run-migrations:
     docker:
-      - image: amazon/aws-cli
+      - image: circleci/node:13.8.0
     steps:
       - checkout
       - run:
           name: Install dependencies
           become: yes
           command: |
-            yum -y install tar gzip nodejs curl
+            sudo apt install tar gzip curl
+      - install_aws-cli
       - restore_cache: 
           keys: [backend-build]
       - run:
