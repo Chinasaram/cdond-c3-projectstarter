@@ -243,8 +243,6 @@ jobs:
           command: |
             sudo apt install tar gzip curl
       - install_aws-cli
-      - restore_cache: 
-          keys: [backend-build]
       - run:
           name: Run migrations
           command: |
