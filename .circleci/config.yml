@@ -274,7 +274,6 @@ jobs:
       - attach_workspace:
           at: ~/
       - install_aws-cli
-      - install_ansible
       - run:
           name: Install dependencies
           become: yes
