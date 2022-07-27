@@ -1,0 +1,9 @@
+TYPEORM_CONNECTION=postgres
+TYPEORM_MIGRATIONS_DIR=./src/migrations
+TYPEORM_ENTITIES=./src/modules/domain/**/*.entity.ts
+TYPEORM_MIGRATIONS=./src/migrations/*.ts
+TYPEORM_HOST=
+TYPEORM_PORT=5432 (or the port from RDS if it’s different)
+TYPEORM_USERNAME={your postgres database username in RDS}
+TYPEORM_PASSWORD={your postgres database password in RDS}
+TYPEORM_DATABASE=postgres {or your postgres database name in RDS}

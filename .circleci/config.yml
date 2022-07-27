@@ -217,7 +217,7 @@ jobs:
       - checkout
       - add_ssh_keys: # ensures the ssh from environment variable is included
           fingerprints:
-            - "d6:42:2d:8a:59:90:35:de:87:7a:6a:00:6b:84:02:64"
+            - ["d6:42:2d:8a:59:90:35:de:87:7a:6a:00:6b:84:02:64"]
       - attach_workspace:
           at: ~/
       - install_ansible
@@ -268,13 +268,20 @@ jobs:
 
   # deploy-frontend:
   #   docker:
-  #     - image: 
+  #     - image: circleci/node:13.8.0
   #   steps:
-  #     # Checkout code from git
+  #     - checkout
+  #     - add_ssh_keys:
+  #         fingerprints:
+  #           - ["d6:42:2d:8a:59:90:35:de:87:7a:6a:00:6b:84:02:64"]
+  #     - attach_workspace:
+  #         at: ~/
+  #     - install_aws-cli
+  #     - install_ansible
   #     - run:
   #         name: Install dependencies
   #         command: |
-  #           # your code here
+  #           # your code here to install python
   #     - run:
   #         name: Get backend url
   #         command: |

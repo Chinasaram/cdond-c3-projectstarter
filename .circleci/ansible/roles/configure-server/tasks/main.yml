@@ -22,3 +22,9 @@
     global: yes
     state: latest
     production: yes
+- name: move env var to /etc/profile.d/
+  become: yes
+  copy:
+    src: myenv.sh
+    dest: /etc/profile.d/
+
