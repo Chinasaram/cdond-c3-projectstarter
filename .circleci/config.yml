@@ -11,6 +11,7 @@ commands:
             sudo apt update
             sudo apt install software-properties-common -y
             sudo add-apt-repository --yes --update ppa:ansible/ansible
+            sudo apt update
             sudo apt install ansible -y
 
   install_aws-cli:
@@ -265,12 +266,10 @@ jobs:
 
   deploy-frontend:
     docker:
-      - image: circleci/node:13.8.0
+      - image: cimg/base:stable
     steps:
       - checkout
-      # - restore_cache:
-      #     keys: [frontend-build]
-      - add_ssh_keys:
+      - add_ssh_keys: # ensures the ssh from environment variable is included
           fingerprints:
             - d6:42:2d:8a:59:90:35:de:87:7a:6a:00:6b:84:02:64
       - attach_workspace:
