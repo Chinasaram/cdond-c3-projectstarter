@@ -221,10 +221,11 @@ jobs:
       - attach_workspace:
           at: ~/
       - install_ansible
+      - install_aws-cli
       - run:
           name: Install dependencies
           command: |
-            sudo apt -y install tar gzip awscli
+            sudo apt -y install tar gzip
       - run:
           name: Configure server
           command: |
@@ -264,7 +265,7 @@ jobs:
 
   deploy-frontend:
     docker:
-      - image: circleci/node:13.8.0
+      - image: cimg/base:stable
     steps:
       - checkout
       - add_ssh_keys:
@@ -278,7 +279,8 @@ jobs:
           name: Install python
           become: yes
           command: |
-            sudo apt-get install python3 tar gzip -y
+            curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash -
+            sudo apt-get nodejs install python3 tar gzip -y
       - run:
           name: Get backend url
           command: |
