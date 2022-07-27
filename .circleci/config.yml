@@ -266,6 +266,8 @@ jobs:
   deploy-frontend:
     docker:
       - image: cimg/base:stable
+      - restore_cache:
+          keys: [frontend-build]
     steps:
       - checkout
       - add_ssh_keys:
@@ -273,13 +275,14 @@ jobs:
             - d6:42:2d:8a:59:90:35:de:87:7a:6a:00:6b:84:02:64
       - attach_workspace:
           at: ~/
+      - install_aws-cli
       - run:
           name: Install dependencies
           become: yes
           command: |
             curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash -
             sudo apt-get nodejs install python3 tar gzip -y
-      - install_aws-cli
+      
       - install_ansible
       - run:
           name: Get backend url
@@ -314,8 +317,8 @@ jobs:
             - d6:42:2d:8a:59:90:35:de:87:7a:6a:00:6b:84:02:64
       - attach_workspace:
           at: ~/
-      - install_ansible
       - install_aws-cli
+      - install_ansible
       - run:
           name: Install dependencies
           command: |
