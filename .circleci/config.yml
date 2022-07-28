@@ -13,6 +13,15 @@ commands:
             sudo add-apt-repository --yes --update ppa:ansible/ansible
             sudo apt install ansible -y
 
+  install_nodejs:
+      description: Install nodejs
+      steps:
+        - run:
+            name: Install nodejs
+            command: |
+              curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash -
+              sudo apt-get install nodejs
+
   install_aws-cli:
     description: Install aws cli
     steps:
@@ -275,12 +284,12 @@ jobs:
           at: ~/
       - install_aws-cli
       - install_ansible
+      - install_nodejs
       - run:
           name: Install dependencies
           become: yes
           command: |
-            # curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash -
-            sudo apt-get install python3 tar gzip -y
+            sudo apt install tar gzip curl python3 -y
 
       - run:
           name: Get backend url
@@ -317,6 +326,7 @@ jobs:
           at: ~/
       - install_aws-cli
       - install_ansible
+      - install_nodejs
       - run:
           name: Install dependencies
           command: |
