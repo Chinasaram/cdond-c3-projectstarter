@@ -265,7 +265,7 @@ jobs:
 
   deploy-frontend:
     docker:
-      - image: cytopia/ansible
+      - image: cimg/base:stable
     steps:
       - checkout
       - add_ssh_keys: # ensures the ssh from environment variable is included
@@ -274,12 +274,11 @@ jobs:
       - attach_workspace:
           at: ~/
       - install_aws-cli
+      - install_ansible
       - run:
           name: Install dependencies
           become: yes
           command: |
-            apk add --update ansible
-            ansible --version
             # curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash -
             sudo apt-get install python3 tar gzip -y
 
@@ -308,7 +307,7 @@ jobs:
                     
   deploy-backend:
     docker:
-      - image: circleci/node:13.8.0
+      - image: cimg/base:stable
     steps:
       - checkout
       - add_ssh_keys:
