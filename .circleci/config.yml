@@ -355,7 +355,7 @@ jobs:
     steps:
       - checkout
       - install_aws-cli
-      - install nodejs
+      - install_nodejs
       - run:
           name: Install dependencies
           command: |
