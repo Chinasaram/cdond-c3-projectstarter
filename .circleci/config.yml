@@ -358,6 +358,10 @@ jobs:
       - install_nodejs
       - install_aws-cli
       - run:
+          name: Install dependencies
+          command: |
+            sudo apt-get install python3 tar gzip -y
+      - run:
           name: Backend smoke test.
           command: |
             BACKEND_IP=$(aws ec2 describe-instances \
