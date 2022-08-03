@@ -18,8 +18,11 @@
 - name: "executing node app with PM2"
   shell: |
     cd ~/backend-app/dist
-    # pm2 stop default
-    sudo pm2 start npm -- start
+    cd ../
+    npm install 
+    sudo npm install forever -g
+    sudo npm install ts-node -g
+    forever start -c "ts-node -r ts.config-paths/register -r dotenv/config src/main.ts" ./
   register: execute_node
 
 - name: "print message"
