@@ -419,32 +419,31 @@ jobs:
             else
               exit 1
             fi
-      # - destroy-environment
-      # - revert-migrations   
+      - destroy-environment
+      - revert-migrations   
 
-#   cloudfront-update:
-#     docker:
-#       - image: amazon/aws-cli
-#     steps:
-#       - checkout
-#       - run:
-#           name: Install dependencies/ save old Workflow ID to kvdb.io
-#           command: |
-#             export OLD_WORKFLOW_ID=$(aws cloudformation \
-#             list-exports --query "Exports[?Name==\`WorkflowID\`].Value" \
-#             --no-paginate --output text)
-#             echo "Old Workflow ID:$OLD_WORKFLOW_ID"
-#             curl https://kvdb.io/17MCSDY3PCvqFDpduvuZXs/old_workflow_id -d "${OLD_WORKFLOW_ID}"
-#       - run:
-#           name: Update cloudfront distribution
-#           command: |
-#             aws cloudformation deploy \
-#             --template-file .circleci/files/cloudfront.yml \
-#             --parameter-overrides WorkflowID="${CIRCLE_WORKFLOW_ID:0:7}" \
-#             --stack-name InitialStack
-#       - destroy-environment
-#       - revert-migrations
-#       # Here's where you will add some code to rollback on failure  
+  cloudfront-update:
+    docker:
+      - image: amazon/aws-cli
+    steps:
+      - checkout
+      - run:
+          name: Install dependencies/ save old Workflow ID to kvdb.io
+          command: |
+            export OLD_WORKFLOW_ID=$(aws cloudformation \
+            list-exports --query "Exports[?Name==\`WorkflowID\`].Value" \
+            --no-paginate --output text)
+            echo "Old Workflow ID:$OLD_WORKFLOW_ID"
+            curl https://kvdb.io/17MCSDY3PCvqFDpduvuZXs/old_workflow_id -d "${OLD_WORKFLOW_ID}"
+      - run:
+          name: Update cloudfront distribution
+          command: |
+            aws cloudformation deploy \
+            --template-file .circleci/files/cloudfront.yml \
+            --parameter-overrides WorkflowID="${CIRCLE_WORKFLOW_ID:0:7}" \
+            --stack-name InitialStack
+      - destroy-environment
+      - revert-migrations 
 
 #   cleanup:
 #     docker:
